@@ -95,7 +95,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import EmployeeService from '../services/EmployeeService'
 function CreateEmployeeComponent() {
   const navigate = useNavigate();
 
@@ -108,6 +108,10 @@ function CreateEmployeeComponent() {
 
     let employee = { firstName, lastName, emailId };
     console.log('employee => ' + JSON.stringify(employee));
+
+    EmployeeService.createEmployee(employee).then(res =>{
+        navigate('/employees');
+    });
   };
 
   const cancel = () => {
