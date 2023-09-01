@@ -39,4 +39,23 @@ public class EmployeeController {
 
         return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
     }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException(("Employee not found")));
+
+        return new ResponseEntity<Employee>(employee, HttpStatus.FOUND);
+    }
+
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<?> updateEmployeeId(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO){
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Employee Not Found with the id"));
+
+        modelMapper.map(employeeDTO, existingEmployee);
+        Employee updatedEmployee = employeeRepository.save(existingEmployee);
+        return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.OK);
+    }
+
 }
