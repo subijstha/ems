@@ -84,11 +84,11 @@ function ListComponent() {
   }, []);
 
   const addEmployee = () => {
-    navigate('/add-employee');
+    navigate('/add-employee/_add');
   };
   
   const editEmployee = (id) =>{
-    navigate(`/update-employee/${id}`)
+    navigate(`/add-employee/${id}`)
   }
 
   return (
