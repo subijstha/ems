@@ -19,8 +19,9 @@ function App() {
             <Routes>
               <Route path="/" exact element={<ListEmployeeComponent />} ></Route>
               <Route path="/employees" element={<ListEmployeeComponent />} ></Route>
-              <Route path="/add-employee" element={<CreateEmployeeComponent />}></Route>
-              <Route path="/update-employee/:id" element={<UpdateEmployeeComponent />}></Route>
+              {/* same route for both add and update */}
+              <Route path="/add-employee/:id" element={<CreateEmployeeComponent />}></Route>
+              {/* <Route path="/update-employee/:id" element={<UpdateEmployeeComponent />}></Route> */}
             </Routes>
 
           </div>
