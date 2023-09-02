@@ -86,6 +86,10 @@ function ListComponent() {
   const addEmployee = () => {
     navigate('/add-employee');
   };
+  
+  const editEmployee = (id) =>{
+    navigate(`/update-employee/${id}`)
+  }
 
   return (
     <div>
@@ -118,6 +122,10 @@ function ListComponent() {
                                         <td>{employee.firstName}</td>
                                         <td>{employee.lastName}</td>
                                         <td>{employee.emailId}</td>
+
+                                        <td>
+                                            <button onClick={ ()=> editEmployee(employee.id)} className='btn btn-info'>Update</button>
+                                        </td>
                                     </tr>
                                 )
                             }
