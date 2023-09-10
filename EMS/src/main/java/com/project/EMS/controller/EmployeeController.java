@@ -3,6 +3,7 @@ package com.project.EMS.controller;
 
 import com.project.EMS.Repository.EmployeeRepository;
 import com.project.EMS.Service.EmployeeDTO;
+import com.project.EMS.exception.ResourceNotFoundException;
 import com.project.EMS.model.Employee;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -57,5 +60,32 @@ public class EmployeeController {
         Employee updatedEmployee = employeeRepository.save(existingEmployee);
         return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.OK);
     }
+
+    @DeleteMapping("/employees/{name}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable String  name){
+        Employee employee = employeeRepository.findByFirstName(name);
+
+        if (employee == null) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Employee not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
+        employeeRepository.delete(employee);
+
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(map);
+    }
+
+//    @DeleteMapping("/employees/{id}")
+//    public ResponseEntity<?> deleteEmployee(@PathVariable Long id){
+//        Employee employee = employeeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Employee doesnt exist with id :" + id));
+//        employeeRepository.delete(employee);
+//
+//        Map<String, Boolean> map = new HashMap<>();
+//        map.put("deleted", Boolean.TRUE);
+//        return ResponseEntity.ok(map);
+//    }
 
 }
